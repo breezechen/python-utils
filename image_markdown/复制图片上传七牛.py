@@ -46,16 +46,11 @@ def upload(img_buf):
     return ret_str
 
 def main():
-    img = get_image_from_clipboard()
-    if not img:
-        img = get_image_from_hdrop()
-    if img:
+    if img := get_image_from_clipboard() or get_image_from_hdrop():
         img_buffer = cStringIO.StringIO()
         try:
             img.save(img_buffer, format="PNG")
-            #img_str = '![](data:image/png;base64,%s)' % str(base64.b64encode(img_buffer.getvalue()))
-            img_str = upload(img_buffer)
-            if img_str:
+            if img_str := upload(img_buffer):
                 #print img_str
                 pyperclip.copy(img_str)
         except IOError:

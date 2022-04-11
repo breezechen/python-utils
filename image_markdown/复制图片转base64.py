@@ -25,10 +25,7 @@ def get_image_from_hdrop():
     return img
 
 def main():
-    img = get_image_from_clipboard()
-    if not img:
-        img = get_image_from_hdrop()
-    if img:
+    if img := get_image_from_clipboard() or get_image_from_hdrop():
         img_buffer = cStringIO.StringIO()
         try:
             img.save(img_buffer, format="PNG")
